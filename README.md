@@ -1,130 +1,113 @@
-# Trabalho-MVP-ML-PUC
-MVP de Machine Learning – Previsão de NPS em C+6
+## MVP de Machine Learning – Previsão de NPS em C+6
+
 Contexto
 
-Este projeto faz parte da disciplina de Machine Learning da PUC, mas foi inspirado em um desafio que vivencio na prática. Trabalho como Coordenador de Experiência do Cliente (CX) e CRM em uma construtora, e um dos maiores pontos de atenção na área é identificar clientes que podem ficar insatisfeitos antes da pesquisa final de NPS, que acontece seis meses após a entrega das chaves.
+Esse projeto nasceu dentro da disciplina de Machine Learning da PUC, mas foi inspirado em um desafio que eu enfrento no dia a dia como Coordenador de Experiência do Cliente (CX) em uma construtora.
 
-A ideia aqui foi trazer esse problema real para dentro do curso e construir um MVP preditivo, testando diferentes modelos de aprendizado de máquina para verificar se conseguimos antecipar a percepção do cliente e atuar de forma preventiva.
+O problema é que a pesquisa de NPS seis meses após a entrega das chaves (C+6) muitas vezes chega tarde: quando o cliente já está insatisfeito, sobra pouco espaço para ação. A proposta aqui foi criar um MVP preditivo que consiga antecipar quem tem mais chance de ser Detrator, Neutro ou Promotor, para que a equipe de CX possa agir antes da pesquisa final.
 
 Objetivo
 
-O objetivo é prever se um cliente será:
+Treinar modelos de classificação para prever o NPS C+6 com base em variáveis já conhecidas durante a jornada do cliente:
 
-Detrator (nota 0–6),
+Nota no NPS da vistoria
 
-Neutro (nota 7–8) ou
+Perfil socioeconômico (idade, filhos, renda, escolaridade, estado civil)
 
-Promotor (nota 9–10)
-
-na pesquisa de NPS C+6.
-
-As variáveis consideradas incluem:
-
-Nota dada no NPS da vistoria
-
-Perfil socioeconômico: renda, idade, filhos, estado civil, escolaridade
-
-Dados operacionais: meses para entrega, status e acionamentos da assistência técnica
+Dados operacionais (meses para entrega, acionamentos da assistência técnica, status do chamado)
 
 Região e safra de obras
 
-Etapas do Trabalho
+Com isso, a área de CX pode antecipar riscos, priorizar clientes críticos e potencializar ações de fidelização.
 
-Carga e preparação dos dados
+O que foi feito
 
-Leitura da base em CSV
+Preparação da base (tratamento de nulos, criação do target nps_6m_target).
 
-Criação da variável alvo nps_6m_target
+Análise inicial (48% Detratores, 32% Promotores, 20% Neutros).
 
-Ajuste de tipos e tratamento de valores ausentes
+Pipelines de pré-processamento (padronização + one-hot).
 
-Exploração e pré-processamento
-
-Análise da distribuição das classes (Detratores 48%, Promotores 32%, Neutros 20%)
-
-Tratamento de missing values (mediana/moda)
-
-Padronização e codificação via pipeline
-
-Divisão treino/teste estratificada
-
-Modelagem
+Teste de diferentes modelos:
 
 Baseline: Dummy Classifier
 
-Modelos lineares e probabilísticos (Regressão Logística, Naive Bayes)
+Modelos simples: Regressão Logística, SVM, KNN, Naive Bayes, Árvore
 
-Árvores e ensembles (Decision Tree, Random Forest, Bagging, Extra Trees, Voting)
+Ensembles: Random Forest, Bagging, Extra Trees, Voting
 
-Boosting (AdaBoost, Gradient Boosting, XGBoost)
+Boosting: AdaBoost, Gradient Boosting, XGBoost
 
-Avaliação
+Validação cruzada e comparação de métricas.
 
-Validação cruzada estratificada (k=5)
+Tuning no AdaBoost com GridSearchCV.
 
-Métricas: accuracy, f1-macro, precision, recall
-
-Comparação e ranking de modelos
-
-Otimização de hiperparâmetros
-
-GridSearchCV no AdaBoost
-
-Melhor configuração: n_estimators=100, learning_rate=0.5, max_depth=3
-
-f1-macro em CV: ~0,49
-
-Aplicação prática
-
-Simulação de clientes fictícios
-
-Previsão da classe (Detrator, Neutro ou Promotor)
-
-Discussão sobre uso real no negócio
+Simulação prática com clientes fictícios.
 
 Resultados
-Modelo	Accuracy	f1-macro	Observações
-Dummy (Baseline)	0,48	0,21	Sempre prevê Detrator
-Logistic Regression	0,56	0,43	Melhor que baseline, mas fraco em Neutros
-Random Forest	0,54	0,43	Estável, mas sem destaque
-Gradient Boosting	0,57	~0,45	Bom equilíbrio
-AdaBoost (default)	0,58	~0,46	Melhor desempenho geral
-AdaBoost (tuning)	0,53	0,45	Refinou Detratores e Promotores, mas Neutros seguem críticos
 
-📌 Insight: os algoritmos de boosting foram os que mais se destacaram, mas a classe Neutro continua sendo difícil de prever devido ao desbalanceamento.
+Baseline (Dummy): 48% (só prevê Detrator).
 
-Próximos Passos
+Modelos lineares: 53–56%.
 
-Testar técnicas de balanceamento (SMOTE, class_weight)
+Random Forest / Ensembles: ~54%.
 
-Explorar variantes modernas como LightGBM e CatBoost
+Boosting: AdaBoost (58%) e Gradient Boosting (57%) tiveram o melhor desempenho.
 
-Analisar importância das variáveis para entender os fatores que mais pesam no NPS
+AdaBoost otimizado: ~53% no teste, com maior equilíbrio entre Detrator e Promotor.
 
-Integrar o modelo em um painel de CX para apoiar ações preventivas
+📌 Ponto crítico: o modelo ainda tem dificuldade em classificar os Neutros (20% da base).
 
-Como Executar
-Clonar o repositório
+Se um Neutro é previsto como Detrator, podemos agir antes para evitar uma resposta negativa.
+
+Se um Neutro é previsto como Promotor, podemos ativar campanhas de indicação (MGM) e fidelização.
+
+Ou seja, mesmo errando nos Neutros, o modelo já gera valor prático: permite decidir estratégias de retenção e engajamento com antecedência.
+
+Exemplo prático
+Cliente	NPS Vistoria	Renda	Acionamentos	Previsão C+6
+SP (40 anos, baixa renda, 3 acionamentos)	Detrator	FAIXA 1	3	Detrator
+BA (32 anos, renda média, sem acionamentos)	Neutro	FAIXA 2	0	Detrator
+CE (27 anos, renda alta, 5 acionamentos)	Promotor	FAIXA 3	5	Promotor
+
+O modelo já consegue:
+✅ Identificar bem Detratores e Promotores
+⚠️ Nos Neutros, traz alertas úteis que podem direcionar a atuação da equipe de CX
+
+Conclusão
+
+Este MVP mostra que já é possível colocar o modelo em prática como piloto. Mesmo com limitações na classe Neutro, ele apoia decisões estratégicas da área de CX:
+
+Antecipar clientes insatisfeitos e reduzir riscos de Detratores no C+6.
+
+Aproveitar Promotores para reforçar programas de indicação e fidelização.
+
+Trabalhar Neutros de forma proativa, aumentando as chances de reversão positiva e impacto direto no NPS.
+
+Assim, o projeto conecta teoria e prática, mostrando como o uso de Machine Learning pode fortalecer a gestão da experiência do cliente no setor de construção civil.
+
+Próximos passos
+
+Balanceamento de classes (SMOTE, class_weight).
+
+Testar LightGBM e CatBoost.
+
+Explorar feature importance para entender fatores-chave.
+
+Avaliar uso em painel de CX em tempo real.
+
+Como rodar
 git clone https://github.com/frasilva82/Trabalho-MVP-ML-PUC.git
 cd Trabalho-MVP-ML-PUC
 
-Rodar no Google Colab
 
-Abra o notebook diretamente pelo link:
-👉 Abrir no Colab
+👉 Abrir direto no Colab
 
-Rodar localmente
-
-Instale as dependências principais:
+Dependências principais:
 
 pip install pandas numpy scikit-learn xgboost matplotlib
-
-
-Depois, abra o notebook MVP_NPS.ipynb no Jupyter Notebook ou VSCode.
 
 Autor
 
 Francisco Almeida da Silva
 Coordenador de Experiência do Cliente (CX) e CRM – Construtora Tenda
-
-Projeto desenvolvido no curso de Machine Learning da PUC, inspirado em desafios reais de gestão de NPS.
