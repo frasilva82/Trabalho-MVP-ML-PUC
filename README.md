@@ -74,18 +74,27 @@ O modelo já consegue:
 ✅ Identificar bem Detratores e Promotores
 ⚠️ Nos Neutros, traz alertas úteis que podem direcionar a atuação da equipe de CX
 
-Conclusão
+Antecipar clientes insatisfeitos (Detratores)
 
-Este MVP mostra que já é possível colocar o modelo em prática como piloto. Mesmo com limitações na classe Neutro, ele apoia decisões estratégicas da área de CX:
+O modelo consegue identificar clientes com alto risco de se tornarem Detratores no C+6.
 
-Antecipar clientes insatisfeitos e reduzir riscos de Detratores no C+6.
+Isso permite acionar equipes de relacionamento, assistência técnica e renegociação antes da pesquisa final.
 
-Aproveitar Promotores para reforçar programas de indicação e fidelização.
+Na prática, significa reduzir surpresas negativas e evitar quedas no NPS que só apareceriam no fim da jornada.
 
-Trabalhar Neutros de forma proativa, aumentando as chances de reversão positiva e impacto direto no NPS.
+Aproveitar Promotores
 
-Assim, o projeto conecta teoria e prática, mostrando como o uso de Machine Learning pode fortalecer a gestão da experiência do cliente no setor de construção civil.
+Os clientes que o modelo indica como Promotores podem ser rapidamente direcionados para programas de indicação (MGM), campanhas de fidelização e geração de leads.
 
+Com isso, a empresa consegue transformar satisfação em resultado de negócio (mais vendas, menor CAC) ainda durante a jornada.
+
+Trabalhar os Neutros de forma proativa
+
+Apesar de ser a classe mais difícil, justamente aí está o maior potencial: um Neutro pode migrar para Detrator (impacto negativo no NPS) ou ser convertido em Promotor (impacto positivo direto).
+
+O modelo funciona como um radar de atenção, permitindo criar planos específicos de encantamento, acompanhamento e reforço da percepção de valor.
+
+Ou seja, cada Neutro bem trabalhado significa pontos a mais no NPS consolidado.
 Próximos passos
 
 Balanceamento de classes (SMOTE, class_weight).
