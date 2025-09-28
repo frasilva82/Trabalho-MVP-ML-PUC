@@ -1,13 +1,15 @@
 ##MVP – Predição de NPS no Pós-Ocupação
 
-Contexto
+Contexto:
 
 Este projeto foi desenvolvido como parte do MVP da disciplina de Machine Learning da PUC no cusrso de especialização em ciência de dados e analytics.
-O desafio foi inspirado em situações reais do mercado imobiliário, mas com dados adaptados para estudo acadêmico utilizando uma base de dados construída exclusivamente para fins de estudo, sem qualquer exposição de informações pessoais ou corporativas, mantendo apenas as variáveis necessárias para a análise estatística e predição.
+O desafio foi inspirado em situações reais do mercado imobiliário, mas com dados adaptados para estudo acadêmico utilizando uma base de dados construída exclusivamente para fins de estudo, sem qualquer exposição de informações pessoais mantendo apenas as variáveis necessárias para a análise estatística e predição.
 
 O exercício busca identificar, de forma antecipada, clientes com potencial de insatisfação no período de pós ocupação de seu apartamento, permitindo assim ações táticas e iniciativas para reversão desta percepção negativa do cliente.
 
 Hoje, a pesquisa NPS (Net Promoter Score) é aplicada 6 meses após a entrega das chaves. O objetivo do projeto foi treinar um modelo capaz de prever esse resultado futuro (NPS Chaves+6 ou C+6) com base em dados coletados no momento da vistoria e em atributos do cliente.
+
+Sobre o NPS:
 
 O Net Promoter Score (NPS) é uma métrica de lealdade e satisfação de clientes criada por Fred Reichheld (2003). É amplamente utilizada em diversos setores, inclusive no mercado imobiliário, para medir a experiência do cliente após interações importantes, como a entrega do imóvel.
 
@@ -21,7 +23,7 @@ O cálculo parte de uma única pergunta:
 9 e 10: Promotores (clientes engajados, com alto potencial de recomendação).
 
 
-Objetivo
+Objetivo:
 
 Construir um modelo de Machine Learning supervisionado que classifique clientes como:
 
@@ -34,9 +36,7 @@ Promotor (avaliações NPS entre 9 e 10)
 A ideia é que esse modelo seja usado de forma prática pela área de CX para atuar antes da pesquisa final — prevenindo riscos, engajando clientes e aumentando o impacto positivo no NPS.
 
 
-Base de Dados
-
-A base de dados utilizada foi adaptada/sintetizada para fins acadêmicos, sem exposição de informações reais de clientes.
+Base de Dados:
 
 Variáveis:
 
@@ -49,7 +49,7 @@ Variável alvo: NPS 6 meses após as chaves, transformado em três classes (Detr
 Desbalanceamento: 48% Detratores, 32% Promotores e 20% Neutros.
 
 
-Metodologia
+Metodologia:
 
 Exploração da base: análise de distribuições, categorias e valores ausentes (~0,5%).
 
@@ -66,7 +66,7 @@ Comparação ampliada: KNN, SVM, Naive Bayes, Decision Tree, Bagging, Extra Tree
 Otimização: tuning de hiperparâmetros no AdaBoost (n_estimators, learning_rate, max_depth).
 
 
-Resultados
+Resultados:
 
 Modelos lineares (Regressão Logística): superaram o baseline, mas com baixa sensibilidade para a classe Neutro.
 
@@ -86,7 +86,7 @@ f1_macro: ~0,46
 
 
 
-Aplicabilidade prática em CX
+Aplicabilidade prática em CX:
 
 O modelo ilustra como poderia ser aplicado em um cenário de gestão da experiÊncia do cliente (CX), para antecipar riscos e engajar clientes
 
@@ -100,7 +100,7 @@ Neutros: trabalhar de forma proativa, aumentando as chances de reversão positiv
 
 
 
-Conclusão
+Conclusão:
 
 Este MVP conecta teoria e prática: mostra como o uso de Machine Learning pode fortalecer a gestão da experiência do cliente no setor da construção civil.
 
