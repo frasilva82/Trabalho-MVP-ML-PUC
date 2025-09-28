@@ -1,122 +1,103 @@
-## MVP de Machine Learning – Previsão de NPS em C+6
+##MVP – Predição de NPS no Pós-Ocupação
 
 Contexto
 
-Esse projeto nasceu dentro da disciplina de Machine Learning da PUC, mas foi inspirado em um desafio que eu enfrento no dia a dia como Coordenador de Experiência do Cliente (CX) em uma construtora.
+Este projeto foi desenvolvido como parte do MVP da disciplina de Machine Learning da PUC no cusrso de especialização em ciência de dados e analytics.
+O desafio trazido é real, eu atuo como gestor de Experiência do Cliente (CX) em uma construtora, e uma das dores da área é identificar, de forma antecipada, clientes com potencial de insatisfação.
 
-O problema é que a pesquisa de NPS seis meses após a entrega das chaves (C+6) muitas vezes chega tarde: quando o cliente já está insatisfeito, sobra pouco espaço para ação. A proposta aqui foi criar um MVP preditivo que consiga antecipar quem tem mais chance de ser Detrator, Neutro ou Promotor, para que a equipe de CX possa agir antes da pesquisa final.
+Hoje, a pesquisa NPS (Net Promoter Score) é aplicada 6 meses após a entrega das chaves. O objetivo do projeto foi treinar um modelo capaz de prever esse resultado futuro (NPS Chaves+6 ou C+6) com base em dados coletados no momento da vistoria e em atributos do cliente.
+
+O Net Promoter Score (NPS) é uma métrica de lealdade e satisfação de clientes criada por Fred Reichheld (2003). É amplamente utilizada em diversos setores, inclusive no mercado imobiliário, para medir a experiência do cliente após interações importantes, como a entrega do imóvel.
+
+O cálculo parte de uma única pergunta:
+“Em uma escala de 0 a 10, qual a probabilidade de você recomendar a empresa/produto/serviço a um amigo ou colega?”
+
+0 a 6: Detratores (clientes insatisfeitos, risco de churn e críticas negativas).
+
+7 e 8: Neutros (clientes indiferentes, pouco engajados).
+
+9 e 10: Promotores (clientes engajados, com alto potencial de recomendação).
+
 
 Objetivo
 
-Treinar modelos de classificação para prever o NPS C+6 com base em variáveis já conhecidas durante a jornada do cliente:
+Construir um modelo de Machine Learning supervisionado que classifique clientes como:
 
-Nota no NPS da vistoria
+Detrator (avaliações NPS entre 0 a 6)
 
-Perfil socioeconômico (idade, filhos, renda, escolaridade, estado civil)
+Neutro (avaliações NPS entre 7 e 8)
 
-Dados operacionais (meses para entrega, acionamentos da assistência técnica, status do chamado)
+Promotor (avaliações NPS entre 9 e 10)
 
-Região e safra de obras
+A ideia é que esse modelo seja usado de forma prática pela área de CX para atuar antes da pesquisa final — prevenindo riscos, engajando clientes e aumentando o impacto positivo no NPS.
 
-Com isso, a área de CX pode antecipar riscos, priorizar clientes críticos e potencializar ações de fidelização.
 
-O que foi feito
+Base de Dados
 
-Preparação da base (tratamento de nulos, criação do target nps_6m_target).
+Registros: 2.539 clientes.
 
-Análise inicial (48% Detratores, 32% Promotores, 20% Neutros).
+Variáveis:
 
-Pipelines de pré-processamento (padronização + one-hot).
+Numéricas: idade, filhos, sexo, meses_para_entrega, acionamentos_assistencia.
 
-Teste de diferentes modelos:
+Categóricas: regional, safra_inicio_obras, nps_vistoria, faixa_renda, estado_civil, escolaridade, status_assistencia.
 
-Baseline: Dummy Classifier
+Variável alvo: NPS 6 meses após as chaves, transformado em três classes (Detrator=0, Neutro=1, Promotor=2).
 
-Modelos simples: Regressão Logística, SVM, KNN, Naive Bayes, Árvore
+Desbalanceamento: 48% Detratores, 32% Promotores e 20% Neutros.
 
-Ensembles: Random Forest, Bagging, Extra Trees, Voting
 
-Boosting: AdaBoost, Gradient Boosting, XGBoost
+Metodologia
 
-Validação cruzada e comparação de métricas.
+Exploração da base: análise de distribuições, categorias e valores ausentes (~0,5%).
 
-Tuning no AdaBoost com GridSearchCV.
+Pré-processamento: imputação de faltantes (mediana/moda), padronização numérica e one-hot encoding para variáveis categóricas.
 
-Simulação prática com clientes fictícios.
+Divisão treino/teste: 80/20, preservando proporção das classes (stratify).
+
+Baseline: DummyClassifier (acurácia ~48%, equivalente à classe majoritária Detrator).
+
+Modelagem inicial: Regressão Logística e Random Forest.
+
+Comparação ampliada: KNN, SVM, Naive Bayes, Decision Tree, Bagging, Extra Trees, Voting, Gradient Boosting e AdaBoost, todos com validação cruzada (k=5).
+
+Otimização: tuning de hiperparâmetros no AdaBoost (n_estimators, learning_rate, max_depth).
+
 
 Resultados
 
-Baseline (Dummy): 48% (só prevê Detrator).
+Modelos lineares (Regressão Logística): superaram o baseline, mas com baixa sensibilidade para a classe Neutro.
 
-Modelos lineares: 53–56%.
+Random Forest: maior robustez, mas ainda limitada nos Neutros.
 
-Random Forest / Ensembles: ~54%.
-
-Boosting: AdaBoost (58%) e Gradient Boosting (57%) tiveram o melhor desempenho.
-
-AdaBoost otimizado: ~53% no teste, com maior equilíbrio entre Detrator e Promotor.
-
-📌 Ponto crítico: o modelo ainda tem dificuldade em classificar os Neutros (20% da base).
-
-Se um Neutro é previsto como Detrator, podemos agir antes para evitar uma resposta negativa.
-
-Se um Neutro é previsto como Promotor, podemos ativar campanhas de indicação (MGM) e fidelização.
-
-Ou seja, mesmo errando nos Neutros, o modelo já gera valor prático: permite decidir estratégias de retenção e engajamento com antecedência.
-
-Exemplo prático
-Cliente	NPS Vistoria	Renda	Acionamentos	Previsão C+6
-SP (40 anos, baixa renda, 3 acionamentos)	Detrator	FAIXA 1	3	Detrator
-BA (32 anos, renda média, sem acionamentos)	Neutro	FAIXA 2	0	Detrator
-CE (27 anos, renda alta, 5 acionamentos)	Promotor	FAIXA 3	5	Promotor
-
-O modelo já consegue:
-✅ Identificar bem Detratores e Promotores
-⚠️ Nos Neutros, traz alertas úteis que podem direcionar a atuação da equipe de CX
-
-Antecipar clientes insatisfeitos (Detratores)
-
-O modelo consegue identificar clientes com alto risco de se tornarem Detratores no C+6.
-
-Isso permite acionar equipes de relacionamento, assistência técnica e renegociação antes da pesquisa final.
-
-Na prática, significa reduzir surpresas negativas e evitar quedas no NPS que só apareceriam no fim da jornada.
-
-Aproveitar Promotores
-
-Os clientes que o modelo indica como Promotores podem ser rapidamente direcionados para programas de indicação (MGM), campanhas de fidelização e geração de leads.
-
-Com isso, a empresa consegue transformar satisfação em resultado de negócio (mais vendas, menor CAC) ainda durante a jornada.
-
-Trabalhar os Neutros de forma proativa
-
-Apesar de ser a classe mais difícil, justamente aí está o maior potencial: um Neutro pode migrar para Detrator (impacto negativo no NPS) ou ser convertido em Promotor (impacto positivo direto).
-
-O modelo funciona como um radar de atenção, permitindo criar planos específicos de encantamento, acompanhamento e reforço da percepção de valor.
-
-Ou seja, cada Neutro bem trabalhado significa pontos a mais no NPS consolidado.
-Próximos passos
-
-Balanceamento de classes (SMOTE, class_weight).
-
-Testar LightGBM e CatBoost.
-
-Explorar feature importance para entender fatores-chave.
-
-Avaliar uso em painel de CX em tempo real.
-
-Como rodar
-git clone https://github.com/frasilva82/Trabalho-MVP-ML-PUC.git
-cd Trabalho-MVP-ML-PUC
+Boosting (AdaBoost e Gradient Boosting): melhores desempenhos médios em validação cruzada.
 
 
-👉 Abrir direto no Colab
 
-Dependências principais:
+Modelo final escolhido:
 
-pip install pandas numpy scikit-learn xgboost matplotlib
+AdaBoost
 
-Autor
+Acurácia média (CV): ~58%
 
-Francisco Almeida da Silva
-Coordenador de Experiência do Cliente (CX) e CRM – Construtora Tenda
+f1_macro: ~0,46
+
+
+
+Aplicabilidade prática em CX
+
+O modelo já pode ser usado como piloto, mesmo com limitações nos clientes Neutros. Ele apoia decisões estratégicas da área de Experiência do Cliente:
+
+Detratores: antecipar riscos de insatisfação e agir antes do NPS final.
+
+Promotores: engajar clientes e fortalecer programas de indicação e fidelização.
+
+Neutros: trabalhar de forma proativa, aumentando as chances de reversão positiva e impacto direto no NPS.
+
+
+
+Conclusão
+
+Este MVP conecta teoria e prática: mostra como o uso de Machine Learning pode fortalecer a gestão da experiência do cliente no setor da construção civil.
+
+Mesmo sendo uma primeira versão, o modelo já apoia decisões reais da operação de CX, oferecendo valor imediato e abrindo espaço para evoluções futuras, como balanceamento de classes, uso de métricas adicionais e exploração de novos algoritmos.
