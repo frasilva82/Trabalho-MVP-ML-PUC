@@ -3,7 +3,7 @@
 Contexto
 
 Este projeto foi desenvolvido como parte do MVP da disciplina de Machine Learning da PUC no cusrso de especialização em ciência de dados e analytics.
-O desafio trazido é real e busca identificar, de forma antecipada, clientes com potencial de insatisfação no período de pós ocupação de seu apartamento.
+O desafio foi inspirado em situações reais do mercado imobiliário, mas com dados adaptados para estudo acadêmico e busca identificar, de forma antecipada, clientes com potencial de insatisfação no período de pós ocupação de seu apartamento, permitindo assim ações táticas e iniciativas para reversão desta percepção negativa do cliente.
 
 Hoje, a pesquisa NPS (Net Promoter Score) é aplicada 6 meses após a entrega das chaves. O objetivo do projeto foi treinar um modelo capaz de prever esse resultado futuro (NPS Chaves+6 ou C+6) com base em dados coletados no momento da vistoria e em atributos do cliente.
 
@@ -34,7 +34,7 @@ A ideia é que esse modelo seja usado de forma prática pela área de CX para at
 
 Base de Dados
 
-Registros: 2.539 clientes.
+A base de dados utilizada foi adaptada/sintetizada para fins acadêmicos, sem exposição de informações reais de clientes.
 
 Variáveis:
 
@@ -86,7 +86,9 @@ f1_macro: ~0,46
 
 Aplicabilidade prática em CX
 
-O modelo já pode ser usado como piloto, mesmo com limitações nos clientes Neutros. Ele apoia decisões estratégicas da área de Experiência do Cliente:
+O modelo ilustra como poderia ser aplicado em um cenário de gestão da experiÊncia do cliente (CX), para antecipar riscos e engajar clientes
+
+Mesmo com limitações nos clientes Neutros. Ele apoia decisões estratégicas da área de Experiência do Cliente:
 
 Detratores: antecipar riscos de insatisfação e agir antes do NPS final.
 
