@@ -3,7 +3,7 @@
 Contexto
 
 Este projeto foi desenvolvido como parte do MVP da disciplina de Machine Learning da PUC no cusrso de especialização em ciência de dados e analytics.
-O desafio trazido é real, eu atuo como gestor de Experiência do Cliente (CX) em uma construtora, e uma das dores da área é identificar, de forma antecipada, clientes com potencial de insatisfação.
+O desafio trazido é real e busca identificar, de forma antecipada, clientes com potencial de insatisfação no período de pós ocupação de seu apartamento.
 
 Hoje, a pesquisa NPS (Net Promoter Score) é aplicada 6 meses após a entrega das chaves. O objetivo do projeto foi treinar um modelo capaz de prever esse resultado futuro (NPS Chaves+6 ou C+6) com base em dados coletados no momento da vistoria e em atributos do cliente.
 
