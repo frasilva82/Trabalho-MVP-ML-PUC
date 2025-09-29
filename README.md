@@ -1,13 +1,13 @@
-##MVP – Predição de NPS no Pós-Ocupação
+##MVP – Previsão da avaliação NPS do cliente no Pós-Ocupação
 
 Contexto:
 
-Este projeto foi desenvolvido como parte do MVP da disciplina de Machine Learning da PUC no cusrso de especialização em ciência de dados e analytics.
-O desafio foi inspirado em situações reais do mercado imobiliário, mas com dados adaptados para estudo acadêmico utilizando uma base de dados construída exclusivamente para fins de estudo, sem qualquer exposição de informações pessoais mantendo apenas as variáveis necessárias para a análise estatística e predição.
+Este projeto foi desenvolvido como parte do MVP da disciplina de Machine Learning da PUC no curso de especialização em ciência de dados e analytics.
+O desafio foi inspirado em situações reais do mercado imobiliário, com dados adaptados para estudo acadêmico utilizando uma dataset construído exclusivamente para fins de estudo, sem exposição de informações pessoais considerando apenas variáveis necessárias para a análise estatística e predição do NPS no Pós Ocupação do Imóvel.
 
 O exercício busca identificar, de forma antecipada, clientes com potencial de insatisfação no período de pós ocupação de seu apartamento, permitindo assim ações táticas e iniciativas para reversão desta percepção negativa do cliente.
 
-Hoje, a pesquisa NPS (Net Promoter Score) é aplicada 6 meses após a entrega das chaves. O objetivo do projeto foi treinar um modelo capaz de prever esse resultado futuro (NPS Chaves+6 ou C+6) com base em dados coletados no momento da vistoria e em atributos do cliente.
+Hoje, a pesquisa NPS (Net Promoter Score) do pós ocupação é aplicada 6 meses após a entrega das chaves. O objetivo do projeto foi treinar um modelo capaz de prever esse resultado futuro (NPS Chaves+6 ou C+6) com base em dados coletados no momento da vistoria e em atributos do cliente.
 
 Sobre o NPS:
 
